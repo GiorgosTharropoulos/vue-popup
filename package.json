@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "export SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "node scripts/gh-pages-deploy.mjs"
   },
   "dependencies": {
     "@tiptap/extension-color": "^2.0.0-beta.9",
