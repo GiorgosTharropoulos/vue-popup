@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import PopUps from '../views/PopUps.vue';
 
 Vue.use(VueRouter);
 
@@ -7,8 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'PopUps',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/PopUps.vue'),
+    component: PopUps,
   },
 ];
 
