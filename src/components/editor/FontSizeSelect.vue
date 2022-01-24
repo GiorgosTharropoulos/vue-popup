@@ -3,6 +3,7 @@
     :value="value"
     @input="handleInput"
     :items="available"
+    :disabled="disabled"
     background-color="white"
     item-text="text"
     item-value="value"
@@ -28,6 +29,7 @@ export default {
       type: FontSizeSelection,
       default: defaultFontSize,
     },
+    disabled: Boolean,
   },
 
   data() {

@@ -4,15 +4,32 @@ import TriggerViewModel, {
   ScrollPercentageValues,
 } from './TriggersVeiwModel';
 
+// eslint-disable-next-line no-unused-vars
+import PopupAction from '@/models/popup/action';
+
 export default class PopupViewModel {
+  /**
+   *
+   * @param {Number} id
+   * @param {String} content
+   * @param {String} backgroundImage
+   * @param {Number} views
+   * @param {Number} clicks
+   * @param {Date} lastViewedAt
+   * @param {PopupAction} userAction
+   * @param {TriggerViewModel} delayTrigger
+   * @param {TriggerViewModel} scrollTrigger
+   * @param {TriggerViewModel} exitTrigger
+   * @param {TriggerViewModel} timeFrequencyTrigger
+   */
   constructor(
     id,
     content,
     backgroundImage,
     views,
-    tags,
     clicks,
     lastViewedAt,
+    userAction,
     delayTrigger = null,
     scrollTrigger = null,
     exitTrigger = null,
@@ -22,9 +39,9 @@ export default class PopupViewModel {
     this.content = content;
     this.backgroundImage = backgroundImage;
     this.views = views;
-    this.tags = tags;
     this.clicks = clicks;
     this.lastViewedAt = lastViewedAt;
+    this.button = userAction;
     this.delayTrigger = delayTrigger || this.getDefaultDelayTrigger();
     this.scrollTrigger = scrollTrigger || this.getDefaultScrollTrigger();
     this.exitTrigger = exitTrigger || this.getDefaultExitTrigger();
@@ -36,38 +53,54 @@ export default class PopupViewModel {
     this.lastViewedAt = Date.now();
   }
 
-  getDefaultDelayTrigger() {
+  static default() {
+    return new PopupViewModel(
+      undefined,
+      '<h1><strong>20% Off</strong></h1>',
+      '',
+      0,
+      0,
+      undefined,
+      PopupAction.default(),
+      PopupViewModel.getDefaultDelayTrigger(),
+      PopupViewModel.getDefaultScrollTrigger(),
+      PopupViewModel.getDefaultExitTrigger(),
+      PopupViewModel.getDefaultTimeFrequencyTrigger()
+    );
+  }
+
+  static getDefaultDelayTrigger() {
     return TriggerViewModel.newDelayTrigger(
       true,
       DelayTriggerValues.ONE_MINUTE
     );
   }
 
-  getDefaultScrollTrigger() {
+  static getDefaultScrollTrigger() {
     return TriggerViewModel.newScrollingTrigger(
       false,
       ScrollPercentageValues.QUARTER
     );
   }
 
-  getDefaultExitTrigger() {
+  static getDefaultExitTrigger() {
     return TriggerViewModel.newOnExitIntentTrigger(false);
   }
 
-  getDefaultTimeFrequencyTrigger() {
+  static getDefaultTimeFrequencyTrigger() {
     return TriggerViewModel.newTimeFrequencyTrigger(
       DisplayTimeFrequencyValues.DAY
     );
   }
 
-  getDefaultTriggers() {
-    const delay = this.getDefaultDelayTrigger();
+  static getDefaultTriggers() {
+    const delay = PopupViewModel.getDefaultDelayTrigger();
 
-    const scroll = this.getDefaultScrollTrigger();
+    const scroll = PopupViewModel.getDefaultScrollTrigger();
 
-    const exit = this.getDefaultExitTrigger();
+    const exit = PopupViewModel.getDefaultExitTrigger();
 
-    const timeFrequency = this.getDefaultTimeFrequencyTrigger();
+    const timeFrequency = PopupViewModel.getDefaultTimeFrequencyTrigger();
 
     return {
       delay: delay,

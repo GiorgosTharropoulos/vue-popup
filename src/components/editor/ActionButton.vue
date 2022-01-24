@@ -2,13 +2,14 @@
   <v-tooltip :top="top" :bottom="bottom">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        :disabled="disabled"
         color="primary"
         @click="$emit('click')"
         class="btn"
         icon
         v-bind="attrs"
         v-on="on"
-        :class="{ 'is-active': active }"
+        :class="{ 'is-active': active && !disabled }"
       >
         <v-icon><slot name="icon"></slot></v-icon>
       </v-btn>
@@ -23,6 +24,7 @@ export default {
     top: String,
     bottom: String,
     active: Boolean,
+    disabled: Boolean,
   },
 };
 </script>

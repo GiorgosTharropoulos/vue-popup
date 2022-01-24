@@ -67,31 +67,55 @@
 
             <v-stepper-content step="2">
               <v-sheet class="mb-2">
+                <!-- Begin Content -->
                 <v-row>
-                  <v-col>
-                    <card-title>Content</card-title>
-                    <div class="my-2">
-                      <!-- Editor -->
-                      <editor v-model="popup.content" />
-                    </div>
-                    <v-row no-gutters align="center">
-                      <v-col cols="12">
-                        <card-title>Background Image</card-title>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-file-input
-                          :value="backgroundImage"
-                          @change="handleChangeBackgroudImage"
-                          accept="image/*"
-                          label="File input"
-                          prepend-icon="mdi-camera"
-                        >
-                        </v-file-input>
-                      </v-col>
-                    </v-row>
+                  <v-col cols="12" md="6">
+                    <!-- Begin Actions -->
+                    <v-container fluid>
+                      <v-row>
+                        <v-col>
+                          <card-title>Content</card-title>
+                        </v-col>
+                      </v-row>
+
+                      <!-- Begin Background Image -->
+                      <v-row no-gutters>
+                        <v-col>
+                          <v-file-input
+                            :value="backgroundImage"
+                            @change="handleChangeBackgroudImage"
+                            accept="image/*"
+                            label="Background Image"
+                            prepend-icon="mdi-camera"
+                          />
+                        </v-col>
+                      </v-row>
+                      <!-- End Background Image -->
+
+                      <!-- Begin Button -->
+                      <v-row>
+                        <v-col>
+                          <user-button v-model="popup.button" />
+                          <button-size-slider v-model="popup.button" />
+                          <button-color-select v-model="popup.button" />
+                          <button-general-props v-model="popup.button" />
+                        </v-col>
+                      </v-row>
+                      <!-- End Button -->
+
+                      <!-- Begin Editor -->
+                      <v-row>
+                        <v-col>
+                          <editor v-model="popup.content" />
+                        </v-col>
+                      </v-row>
+                      <!-- End Editor -->
+                    </v-container>
                   </v-col>
-                  <v-divider vertical inset></v-divider>
-                  <v-col>
+                  <!-- End Actions -->
+
+                  <!-- Begin Preview -->
+                  <v-col cols="12" md="6">
                     <card-title>Preview</card-title>
                     <v-card>
                       <v-img
@@ -105,7 +129,10 @@
                       </v-img>
                     </v-card>
                   </v-col>
+                  <!-- End Preview -->
                 </v-row>
+
+                <!-- End Content-->
               </v-sheet>
               <v-row align="center">
                 <v-col>
@@ -140,13 +167,23 @@
 </template>
 
 <script>
+// Components
 import Breadcrumbs from '../components/navigation/Breadcrumbs.vue';
+import UserButton from '../components/popups/component-modification/UserButton.vue';
+import ButtonSizeSlider from '../components/popups/component-modification/ButtonSizeSlider.vue';
+import ButtonColorSelect from '../components/popups/component-modification/ButtonColorSelect.vue';
+import ButtonGeneralProps from '../components/popups/component-modification/ButtonGeneralProps.vue';
 import TriggerWithCheckboxControl from '../components/popups/TriggerWithCheckboxControl.vue';
 import TriggerWithoutCheckboxControl from '../components/popups/TriggerWithoutCheckboxControl.vue';
 import CardTitle from '../components/shared/CardTitle.vue';
-import Editor from '../components/shared/Editor.vue';
+import Editor from '@/components/shared/Editor.vue';
+
+// Models
 import PopupViewModel from '../models/popup/PopupViewModel.js';
-import { required } from '../utils/validation.js';
+
+// Utisl
+import { required as requiredRule } from '../utils/validation.js';
+
 export default {
   components: {
     Breadcrumbs,
@@ -154,17 +191,22 @@ export default {
     TriggerWithoutCheckboxControl,
     CardTitle,
     Editor,
+    UserButton,
+    ButtonSizeSlider,
+    ButtonColorSelect,
+    ButtonGeneralProps,
   },
   data() {
     return {
-      popup: new PopupViewModel(1, '', null, 0, [], 0, null),
+      popup: PopupViewModel.default(),
       currentStep: 1,
       rules: {
-        required: required,
+        required: requiredRule,
       },
       backgroundImage: null,
     };
   },
+
   methods: {
     handleChangeBackgroudImage(input) {
       if (!input) {
@@ -175,6 +217,7 @@ export default {
       reader.onloadend = () => (this.popup.backgroundImage = reader.result);
       reader.readAsDataURL(input);
     },
+
     handleSubmit() {},
   },
 };

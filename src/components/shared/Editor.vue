@@ -3,7 +3,7 @@
     <v-sheet
       color="blue-grey lighten-5"
       elevation="2"
-      class="pa-0"
+      class="pa-0 editor-toolbar"
       v-if="editor"
     >
       <v-container fluid>
@@ -19,10 +19,12 @@
               background-color="white"
               color="white"
               class="pa-0"
+              :disabled="isCodeView"
             ></v-overflow-btn>
           </v-col>
           <v-col cols="6">
             <font-family-select
+              :disabled="isCodeView"
               v-model="selectedFontFamily"
               @change="handleFontChange"
               backgroundColor="white"
@@ -39,7 +41,11 @@
           <v-col>
             <div style="width: 100%" class="d-flex align-center flex-wrap">
               <div style="max-width: 100px">
-                <font-size-select ref="fontSizeSelect" v-model="fontSize" />
+                <font-size-select
+                  ref="fontSizeSelect"
+                  v-model="fontSize"
+                  :disabled="isCodeView"
+                />
               </div>
 
               <!-- Undo & Redo -->
@@ -57,6 +63,7 @@
                 top
                 @click="editor.chain().focus().toggleBold().run()"
                 :active="editor.isActive('bold')"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-bold</template>
                 <template #tooltip>Bold</template>
@@ -66,6 +73,7 @@
                 top
                 @click="editor.chain().focus().toggleItalic().run()"
                 :active="editor.isActive('italic')"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-italic</template>
                 <template #tooltip>Italic</template>
@@ -75,6 +83,7 @@
                 top
                 @click="editor.chain().focus().toggleStrike().run()"
                 :active="editor.isActive('strike')"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-strikethrough</template>
                 <template #tooltip>Strike</template>
@@ -82,7 +91,12 @@
 
               <!-- Color Picker -->
               <v-btn-toggle dense group>
-                <v-btn icon @input="handleApplyTextColor" color="primary">
+                <v-btn
+                  icon
+                  @input="handleApplyTextColor"
+                  color="primary"
+                  :disabled="isCodeView"
+                >
                   <v-row align="center" class="flex-column" justify="center">
                     <v-icon class="cols 12"> mdi-format-color-text </v-icon>
 
@@ -109,6 +123,7 @@
                       max-width="0"
                       v-bind="attrs"
                       v-on="on"
+                      :disabled="isCodeView"
                     >
                       <v-icon>mdi-chevron-down</v-icon>
                     </v-btn>
@@ -150,6 +165,7 @@
                 top
                 @click="handleSetTextAlign('left')"
                 :active="editor.isActive({ textAlign: 'left' })"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-align-left</template>
                 <template #tooltip>Align Left</template>
@@ -160,6 +176,7 @@
                 top
                 @click="handleSetTextAlign('center')"
                 :active="editor.isActive({ textAlign: 'center' })"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-align-center</template>
                 <template #tooltip>Align Center</template>
@@ -171,6 +188,7 @@
                 top
                 @click="handleSetTextAlign('right')"
                 :active="editor.isActive({ textAlign: 'right' })"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-align-right</template>
                 <template #tooltip>Align Right</template>
@@ -182,6 +200,7 @@
                 top
                 @click="handleSetTextAlign('justify')"
                 :active="editor.isActive({ textAlign: 'justify' })"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-align-justify</template>
                 <template #tooltip>Justify</template>
@@ -193,6 +212,7 @@
                 top
                 @click="editor.chain().focus().toggleBulletList().run()"
                 :active="editor.isActive('bulletList')"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-list-bulleted</template>
                 <template #tooltip>Bullet List</template>
@@ -202,17 +222,32 @@
                 top
                 @click="editor.chain().focus().toggleBulletList().run()"
                 :active="editor.isActive('orderedList')"
+                :disabled="isCodeView"
               >
                 <template #icon>mdi-format-list-numbered</template>
                 <template #tooltip>Numbered List</template>
+              </action-button>
+
+              <action-button
+                top
+                @click="handleCodeViewClicked"
+                :active="isCodeView"
+              >
+                <template #icon>mdi-code-tags</template>
+                <template #tooltip>Toggle Code View</template>
               </action-button>
             </div>
           </v-col>
         </v-row>
       </v-container>
     </v-sheet>
-    <v-card outlined rounded="0" elevation="2">
-      <editor-content :editor="editor" />
+    <v-card outlined elevation="2" class="rounded">
+      <v-textarea
+        v-if="isCodeView"
+        v-model="rawHtml"
+        @input="HandleRawHTMLChanged"
+      />
+      <editor-content v-else :editor="editor" />
     </v-card>
   </v-sheet>
 </template>
@@ -224,19 +259,23 @@ import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { FontFamily } from '@tiptap/extension-font-family';
+import sanitizeHtml from 'sanitize-html';
 
+// Components
 import ActionButton from '../editor/ActionButton.vue';
+import FontFamilySelect from '../editor/FontFamilySelect.vue';
+import FontSizeSelect from '../editor/FontSizeSelect.vue';
 
+// Utils
 import {
   availableFontFamilies,
   defaultFontFamily,
 } from '../../utils/fontFamilies.js';
+import { defaultFontSize } from '../../utils/fontSizes.js';
+import sanitizeOptions from '@/utils/sanitizer.js';
 
 import { FontSize } from '../../editor-extensions/font-size';
 
-import FontFamilySelect from '../editor/FontFamilySelect.vue';
-import FontSizeSelect from '../editor/FontSizeSelect.vue';
-import { defaultFontSize } from '../../utils/fontSizes.js';
 export default {
   components: {
     EditorContent,
@@ -271,6 +310,8 @@ export default {
       fontFamilies: availableFontFamilies,
       selectedFontFamily: defaultFontFamily,
       fontSize: defaultFontSize,
+      isCodeView: false,
+      rawHtml: '',
     };
   },
 
@@ -286,7 +327,9 @@ export default {
         return;
       }
 
-      this.editor.commands.setContent(value, false);
+      if (!this.isCodeView) {
+        this.editor.commands.setContent(value, false);
+      }
     },
 
     fontSize(value) {
@@ -414,6 +457,21 @@ export default {
         this.fontSize = defaultFontSize;
       }
     },
+    handleCodeViewClicked() {
+      if (!this.isCodeView) {
+        this.isCodeView = true;
+        this.rawHtml = this.editor.getHTML();
+      } else {
+        this.isCodeView = false;
+        const cleanHtml = sanitizeHtml(this.rawHtml, sanitizeOptions);
+        this.rawHtml = '';
+        this.editor.commands.setContent(cleanHtml, true);
+      }
+    },
+    HandleRawHTMLChanged(unsafeHTML) {
+      const cleaned = sanitizeHtml(unsafeHTML, sanitizeOptions);
+      this.$emit('input', cleaned);
+    },
   },
 };
 </script>
@@ -421,6 +479,7 @@ export default {
 <style>
 .ProseMirror {
   padding: 20px;
+  background-color: #e0e0e0;
 }
 .v-text-field__details {
   display: none;

@@ -17,6 +17,8 @@
     "@tiptap/starter-kit": "^2.0.0-beta.174",
     "@tiptap/vue-2": "^2.0.0-beta.76",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
+    "sanitize-html": "^2.6.1",
     "slugify": "^1.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

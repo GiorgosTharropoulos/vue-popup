@@ -7,6 +7,7 @@
     hide-details
     editable
     return-object
+    :disabled="disabled"
     :background-color="backgroundColor"
     item-value="value"
     item-text="text"
@@ -32,6 +33,7 @@ export default {
       type: String,
       default: 'white',
     },
+    disabled: Boolean,
   },
 
   data() {
