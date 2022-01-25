@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import PopupAction from '@/models/popup/action';
+import PButton from '@/models/popup/button';
 
 export default {
   props: {
-    value: PopupAction,
+    value: PButton,
   },
 
   watch: {

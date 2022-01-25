@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import PopupAction from '@/models/popup/action';
+import PButton from '@/models/popup/button';
 import sanitizeHtml from 'sanitize-html';
 
 export default {
   props: {
     value: {
-      type: PopupAction,
+      type: PButton,
     },
   },
 

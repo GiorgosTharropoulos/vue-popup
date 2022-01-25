@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import PopupAction from '@/models/popup/action';
+import PButton from '@/models/popup/button';
 import debounce from 'lodash.debounce';
 
 export default {
   props: {
-    value: PopupAction,
+    value: PButton,
   },
 
   watch: {
@@ -54,7 +54,6 @@ export default {
   created() {
     this.debouncedHandleColorChanged = debounce(({ hex }) => {
       if (this.colors.includes(hex)) return;
-      console.log(hex);
       this.colors.push(hex);
     }, 500);
 

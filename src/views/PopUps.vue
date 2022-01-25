@@ -21,50 +21,6 @@
           </v-stepper-header>
 
           <v-stepper-items>
-            <v-stepper-content step="1">
-              <v-sheet class="mb-2">
-                <card-title>Automatically Show</card-title>
-                <div class="mt-2">
-                  <!--  -->
-                  <trigger-with-checkbox-control
-                    :trigger.sync="popup.delayTrigger"
-                  ></trigger-with-checkbox-control>
-                  <trigger-with-checkbox-control
-                    :trigger="popup.scrollTrigger"
-                  ></trigger-with-checkbox-control>
-                  <trigger-with-checkbox-control
-                    :trigger="popup.exitTrigger"
-                  ></trigger-with-checkbox-control>
-                  <!--  -->
-                </div>
-
-                <v-divider class="my-1"></v-divider>
-
-                <card-title> Trigger Automatically At Most </card-title>
-                <div class="mt-2">
-                  <!--  -->
-                  <trigger-without-checkbox-control
-                    :trigger="popup.timeFrequencyTrigger"
-                  ></trigger-without-checkbox-control>
-                  <!--  -->
-                </div>
-              </v-sheet>
-              <v-row align="center">
-                <v-col> </v-col>
-                <v-col>
-                  <v-btn
-                    class="float-right"
-                    rounded
-                    color="primary"
-                    @click="currentStep++"
-                  >
-                    <v-icon left> mdi-arrow-right </v-icon>
-                    Next
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-stepper-content>
-
             <v-stepper-content step="2">
               <v-sheet class="mb-2">
                 <!-- Begin Content -->
@@ -173,13 +129,11 @@ import UserButton from '../components/popups/component-modification/UserButton.v
 import ButtonSizeSlider from '../components/popups/component-modification/ButtonSizeSlider.vue';
 import ButtonColorSelect from '../components/popups/component-modification/ButtonColorSelect.vue';
 import ButtonGeneralProps from '../components/popups/component-modification/ButtonGeneralProps.vue';
-import TriggerWithCheckboxControl from '../components/popups/TriggerWithCheckboxControl.vue';
-import TriggerWithoutCheckboxControl from '../components/popups/TriggerWithoutCheckboxControl.vue';
 import CardTitle from '../components/shared/CardTitle.vue';
 import Editor from '@/components/shared/Editor.vue';
 
 // Models
-import PopupViewModel from '../models/popup/PopupViewModel.js';
+import Popup from '../models/popup/popup.js';
 
 // Utisl
 import { required as requiredRule } from '../utils/validation.js';
@@ -187,8 +141,6 @@ import { required as requiredRule } from '../utils/validation.js';
 export default {
   components: {
     Breadcrumbs,
-    TriggerWithCheckboxControl,
-    TriggerWithoutCheckboxControl,
     CardTitle,
     Editor,
     UserButton,
@@ -198,7 +150,7 @@ export default {
   },
   data() {
     return {
-      popup: PopupViewModel.default(),
+      popup: new Popup(),
       currentStep: 1,
       rules: {
         required: requiredRule,

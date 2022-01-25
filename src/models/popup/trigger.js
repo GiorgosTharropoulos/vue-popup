@@ -52,6 +52,39 @@ export default class Trigger {
     );
   }
 
+  static getDefaultDelayTrigger() {
+    return Trigger.newDelayTrigger(true, DelayTriggerValues.ONE_MINUTE);
+  }
+
+  static getDefaultScrollTrigger() {
+    return Trigger.newScrollingTrigger(false, ScrollPercentageValues.QUARTER);
+  }
+
+  static getDefaultExitTrigger() {
+    return Trigger.newOnExitIntentTrigger(false);
+  }
+
+  static getDefaultTimeFrequencyTrigger() {
+    return Trigger.newTimeFrequencyTrigger(DisplayTimeFrequencyValues.DAY);
+  }
+
+  static getDefaultTriggers() {
+    const delay = Trigger.getDefaultDelayTrigger();
+
+    const scroll = Trigger.getDefaultScrollTrigger();
+
+    const exit = Trigger.getDefaultExitTrigger();
+
+    const timeFrequency = Trigger.getDefaultTimeFrequencyTrigger();
+
+    return {
+      delay: delay,
+      scroll: scroll,
+      exit: exit,
+      timeFrequency: timeFrequency,
+    };
+  }
+
   /**
    *
    * @param {Trigger} trigger

@@ -4,7 +4,7 @@
 
 <script>
 import UserButton from '../components/popups/component-modification/UserButton.vue';
-import UserAction from '@/models/popup/action';
+import UserAction from '@/models/popup/button';
 export default {
   name: 'Home',
   components: {

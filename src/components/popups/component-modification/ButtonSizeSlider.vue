@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import PopupAction from '@/models/popup/action';
+import PButton from '@/models/popup/button';
 
 export default {
   props: {
     value: {
-      type: PopupAction,
+      type: PButton,
     },
   },
 
