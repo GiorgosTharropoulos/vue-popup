@@ -3,5 +3,5 @@ module.exports = {
   configureWebpack: {
     devtool: 'source-map',
   },
-  publicPath: '/vue-popup/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/vue-popup/' : '/',
 };

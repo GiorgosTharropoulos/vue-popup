@@ -18,11 +18,13 @@
     "@tiptap/starter-kit": "^2.0.0-beta.174",
     "@tiptap/vue-2": "^2.0.0-beta.76",
     "core-js": "^3.6.5",
+    "firebase": "^8.10.0",
     "lodash": "^4.17.21",
     "sanitize-html": "^2.6.1",
     "slugify": "^1.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuefire": "^2.2.5",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {
@@ -52,7 +54,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-console": "warn"
+    }
   },
   "browserslist": [
     "> 1%",

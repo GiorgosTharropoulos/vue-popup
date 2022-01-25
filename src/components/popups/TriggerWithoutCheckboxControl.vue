@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import TriggerViewModel from '../../models/popup/TriggersVeiwModel';
+import Trigger from '../../models/popup/trigger';
 import TriggerSelect from './TriggerSelect.vue';
 export default {
   components: { TriggerSelect },
-  props: { trigger: TriggerViewModel },
+  props: { trigger: Trigger },
 };
 </script>
 

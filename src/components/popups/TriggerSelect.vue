@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import TriggerViewModel from '../../models/popup/TriggersVeiwModel';
+import Trigger from '../../models/popup/trigger';
 export default {
   props: {
-    trigger: TriggerViewModel,
+    trigger: Trigger,
   },
 };
 </script>

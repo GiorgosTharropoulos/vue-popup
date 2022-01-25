@@ -15,21 +15,18 @@
 </template>
 
 <script>
-import TriggerViewModel from '../../models/popup/TriggersVeiwModel';
+import Trigger from '../../models/popup/trigger';
 import TriggerSelect from './TriggerSelect.vue';
 export default {
   components: { TriggerSelect },
   props: {
-    trigger: TriggerViewModel,
+    trigger: Trigger,
   },
   methods: {
     handleValueSelection(input) {
-      const cloned = TriggerViewModel.clone(this.trigger);
-      console.log(cloned);
+      const cloned = Trigger.copy(this.trigger);
 
       cloned.selected = input;
-
-      console.log(cloned);
     },
   },
 };

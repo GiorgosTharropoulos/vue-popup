@@ -1,8 +1,8 @@
-import TriggerViewModel, {
+import Trigger, {
   DelayTriggerValues,
   DisplayTimeFrequencyValues,
   ScrollPercentageValues,
-} from './TriggersVeiwModel';
+} from './trigger';
 
 // eslint-disable-next-line no-unused-vars
 import PopupAction from '@/models/popup/action';
@@ -17,10 +17,10 @@ export default class PopupViewModel {
    * @param {Number} clicks
    * @param {Date} lastViewedAt
    * @param {PopupAction} userAction
-   * @param {TriggerViewModel} delayTrigger
-   * @param {TriggerViewModel} scrollTrigger
-   * @param {TriggerViewModel} exitTrigger
-   * @param {TriggerViewModel} timeFrequencyTrigger
+   * @param {Trigger} delayTrigger
+   * @param {Trigger} scrollTrigger
+   * @param {Trigger} exitTrigger
+   * @param {Trigger} timeFrequencyTrigger
    */
   constructor(
     id,
@@ -70,27 +70,19 @@ export default class PopupViewModel {
   }
 
   static getDefaultDelayTrigger() {
-    return TriggerViewModel.newDelayTrigger(
-      true,
-      DelayTriggerValues.ONE_MINUTE
-    );
+    return Trigger.newDelayTrigger(true, DelayTriggerValues.ONE_MINUTE);
   }
 
   static getDefaultScrollTrigger() {
-    return TriggerViewModel.newScrollingTrigger(
-      false,
-      ScrollPercentageValues.QUARTER
-    );
+    return Trigger.newScrollingTrigger(false, ScrollPercentageValues.QUARTER);
   }
 
   static getDefaultExitTrigger() {
-    return TriggerViewModel.newOnExitIntentTrigger(false);
+    return Trigger.newOnExitIntentTrigger(false);
   }
 
   static getDefaultTimeFrequencyTrigger() {
-    return TriggerViewModel.newTimeFrequencyTrigger(
-      DisplayTimeFrequencyValues.DAY
-    );
+    return Trigger.newTimeFrequencyTrigger(DisplayTimeFrequencyValues.DAY);
   }
 
   static getDefaultTriggers() {

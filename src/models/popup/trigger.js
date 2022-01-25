@@ -1,23 +1,23 @@
-export default class TriggerViewModel {
+export default class Trigger {
   /**
    * @constructor
    * @param {Boolean} isEnabled - Whether the trigger is enabled
    * @param {String} label - The label to render
    * @param {TriggerOptionViewModel} selected - The selected option of the trigger
-   * @param {TriggerOptionViewModel[]} availableOptions - Available options of the trigger
+   * @param {TriggerOptionViewModel[]} available - Available options of the trigger
    * @param {Boolean} hasCheckbox - Whether the trigger input has an on-off checkbox
    */
-  constructor(isEnabled, label, selected, availableOptions, hasCheckbox) {
+  constructor(isEnabled, label, selected, available, hasCheckbox) {
     this.isEnabled = isEnabled;
     this.label = label;
     this.selected = selected;
-    this.available = availableOptions;
+    this.available = available;
     this.hasCheckbox = hasCheckbox;
   }
 
   static newDelayTrigger(isEnabled, selected) {
     const label = 'Show on a timer';
-    return new TriggerViewModel(
+    return new Trigger(
       isEnabled,
       label,
       selected,
@@ -28,7 +28,7 @@ export default class TriggerViewModel {
 
   static newScrollingTrigger(isEnabled, selected) {
     const label = 'Show after scrolling';
-    return new TriggerViewModel(
+    return new Trigger(
       isEnabled,
       label,
       selected,
@@ -39,11 +39,11 @@ export default class TriggerViewModel {
 
   static newOnExitIntentTrigger(isEnabled) {
     const label = 'Show on exit-intent';
-    return new TriggerViewModel(isEnabled, label, isEnabled, [], true);
+    return new Trigger(isEnabled, label, isEnabled, [], true);
   }
 
   static newTimeFrequencyTrigger(selected) {
-    return new TriggerViewModel(
+    return new Trigger(
       true,
       undefined,
       selected,
@@ -54,17 +54,15 @@ export default class TriggerViewModel {
 
   /**
    *
-   * @param {TriggerViewModel} trigger
-   * @returns {TriggerViewModel}
+   * @param {Trigger} trigger
+   * @returns {Trigger}
    */
-  static clone(trigger) {
-    return new TriggerViewModel(
-      trigger.isEnabled,
-      trigger.label,
-      TriggerOptionViewModel.clone(trigger.selected),
-      trigger.available.map(available =>
-        TriggerOptionViewModel.clone(available)
-      ),
+  copy(trigger) {
+    return new Trigger(
+      this.isEnabled,
+      this.label,
+      this.selected.copy(),
+      this.available.map(available => available.copy()),
       trigger.hasCheckbox
     );
   }
@@ -81,8 +79,8 @@ export class TriggerOptionViewModel {
     this.value = value;
   }
 
-  static clone(label, value) {
-    return new TriggerOptionViewModel(label, value);
+  copy() {
+    return new TriggerOptionViewModel(this.label, this.value);
   }
 }
 
