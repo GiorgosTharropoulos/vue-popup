@@ -14,16 +14,14 @@
       <v-container fluid>
         <router-view></router-view>
       </v-container>
-      <popup-footer></popup-footer>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import SideBar from './components/navigation/SideBar.vue';
-import PopupFooter from './components/shared/PopupFooter.vue';
 export default {
-  components: { SideBar, PopupFooter },
+  components: { SideBar },
 };
 </script>
 

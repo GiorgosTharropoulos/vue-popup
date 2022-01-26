@@ -18,6 +18,7 @@
     "@tiptap/starter-kit": "^2.0.0-beta.174",
     "@tiptap/vue-2": "^2.0.0-beta.76",
     "core-js": "^3.6.5",
+    "dotenv": "^14.3.2",
     "firebase": "^8.10.0",
     "lodash": "^4.17.21",
     "sanitize-html": "^2.6.1",

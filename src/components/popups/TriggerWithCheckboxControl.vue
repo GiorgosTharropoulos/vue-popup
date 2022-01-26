@@ -1,14 +1,22 @@
 <template>
   <v-row no-gutters align="center">
-    <v-col cols="3" sm="1" v-if="trigger.hasCheckbox">
-      <v-checkbox v-model="trigger.isEnabled"></v-checkbox>
+    <v-col cols="3" sm="1" v-if="value.hasCheckbox">
+      <v-checkbox
+        :input-value="value.isEnabled"
+        @change="handleIsEnabledChanged"
+      ></v-checkbox>
     </v-col>
-    <v-col cols="9" sm="4" v-if="trigger.label">
-      <span class="text-h7">{{ trigger.label }}</span>
+    <v-col cols="9" sm="4" v-if="value.label">
+      <span class="text-h7">{{ value.label }}</span>
     </v-col>
     <v-col align-self="center" cols="12" sm="6">
-      <div v-if="trigger.available.length > 0">
-        <trigger-select :trigger="trigger"></trigger-select>
+      <div v-if="value.available.length > 0">
+        <trigger-select
+          :value="value"
+          @input="
+            newTrigger => $emit('input', { newTrigger: newTrigger, type: type })
+          "
+        ></trigger-select>
       </div>
     </v-col>
   </v-row>
@@ -20,13 +28,16 @@ import TriggerSelect from './TriggerSelect.vue';
 export default {
   components: { TriggerSelect },
   props: {
-    trigger: Trigger,
+    value: Trigger,
+    type: String,
   },
   methods: {
-    handleValueSelection(input) {
-      const cloned = Trigger.copy(this.trigger);
+    handleIsEnabledChanged(newValue) {
+      const copied = this.value.copy();
 
-      cloned.selected = input;
+      copied.isEnabled = newValue ?? false;
+
+      this.$emit('input', { newTrigger: copied, type: this.type });
     },
   },
 };

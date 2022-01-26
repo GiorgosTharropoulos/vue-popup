@@ -31,6 +31,10 @@ export default class Pbutton {
     return new Pbutton({ ...this, ...data });
   }
 
+  toJSON() {
+    return { ...this };
+  }
+
   /**
    *
    * @param {Sizes} size

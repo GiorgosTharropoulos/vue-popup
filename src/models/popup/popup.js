@@ -2,8 +2,10 @@ import Trigger from './trigger';
 
 import Pbutton from './button';
 
+import { Header } from '../base';
+
 export default class Popup {
-  id = 0;
+  title = 'My popup';
   content = '<h1>20% Off</h1>';
 
   backgroundImage = '';
@@ -15,10 +17,10 @@ export default class Popup {
   scrollTrigger = Trigger.getDefaultScrollTrigger();
   exitTrigger = Trigger.getDefaultExitTrigger();
   timeTrigger = Trigger.getDefaultTimeFrequencyTrigger();
+  createdAt = Date.now();
 
   /**
-   *
-   * @param {Number} id
+   * @param {String} title
    * @param {String} content
    * @param {String} backgroundImage
    * @param {Number} views
@@ -29,13 +31,14 @@ export default class Popup {
    * @param {Trigger} scrollTrigger
    * @param {Trigger} exitTrigger
    * @param {Trigger} timeTrigger
+   * @param {Date} createdAt
    */
   constructor(data) {
     this.load(data);
   }
 
   load(data = {}) {
-    this.id = data.id || 0;
+    this.title = data.title || 'My popup';
     this.content = data.content || '<h1>20% Off</h1>';
     this.backgroundImage = data.backgroundImage || '';
     this.views = data.views || 0;
@@ -48,6 +51,7 @@ export default class Popup {
     this.exitTrigger = data.exitTrigger || Trigger.getDefaultExitTrigger();
     this.timeTrigger =
       data.timeTrigger || Trigger.getDefaultTimeFrequencyTrigger();
+    this.createdAt = data.createdAt || Date.now();
   }
 
   copy(data) {
@@ -64,7 +68,34 @@ export default class Popup {
     });
   }
 
+  toJSON() {
+    const json = {
+      title: this.title,
+      content: this.content,
+      backgroundImage: this.backgroundImage,
+      views: this.views,
+      clicks: this.clicks,
+      lastViewedAt: this.lastViewedAt,
+      button: this.button.toJSON(),
+      delayTrigger: this.delayTrigger.toJSON(),
+      scrollTrigger: this.scrollTrigger.toJSON(),
+      exitTrigger: this.exitTrigger.toJSON(),
+      timeTrigger: this.timeTrigger.toJSON(),
+      createdAt: this.createdAt,
+    };
+    return json;
+  }
+
   setViewedNow() {
     this.lastViewedAt = Date.now();
   }
 }
+
+export const gridHeaders = [
+  new Header('Title', 'start', true, 'title'),
+  new Header('Views', 'start', true, 'views'),
+  new Header('Clicks', 'start', true, 'clicks'),
+  new Header('Last Viewed', 'start', true, 'lastViewedAt'),
+  new Header('Created', 'start', true, 'createdAt'),
+  new Header('Actions', null, false, 'actions'),
+];
