@@ -221,4 +221,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.button {
+  display: flex;
+}
+</style>
