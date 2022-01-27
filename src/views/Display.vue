@@ -6,7 +6,7 @@
     >
       {{ popup.title }}
     </div>
-    <div style="height: 1000px"></div>
+    <div style="height: 2000px"></div>
   </section>
 </template>
 
@@ -21,6 +21,10 @@ export default {
       timeoutId: null,
       scrollPercent: 0,
       triedToExit: false,
+      oldPageY: null,
+      swipeThreshold: 200,
+      yDiff: null,
+      yDown: null,
     };
   },
 
@@ -40,7 +44,24 @@ export default {
             this.display = true;
           } else {
             if (this.popup.exitTrigger.isEnabled) {
-              window.addEventListener('beforeunload', this.onUnload);
+              setTimeout(() => {
+                window.addEventListener('beforeunload', this.handleUnload);
+                window.document.body.addEventListener(
+                  'touchstart',
+                  this.handleTouchStart,
+                  false
+                );
+                window.document.body.addEventListener(
+                  'touchend',
+                  this.handleTouchEnd,
+                  false
+                );
+                window.document.body.addEventListener(
+                  'touchmove',
+                  this.handleTouchMove,
+                  false
+                );
+              }, this.popup.exitTrigger.selected.value);
             }
             // Delay Trigger
             if (this.popup.delayTrigger.isEnabled) {
@@ -62,7 +83,22 @@ export default {
 
   destroyed() {
     window.removeEventListener('scroll', this.onScrollTrigger);
-    window.removeEventListener('beforeunload', this.onUnload);
+    window.removeEventListener('beforeunload', this.handleUnload);
+    window.document.body.removeEventListener(
+      'touchstart',
+      this.handleTouchStart,
+      false
+    );
+    window.document.body.removeEventListener(
+      'touchend',
+      this.handleTouchEnd,
+      false
+    );
+    window.document.body.removeEventListener(
+      'touchmove',
+      this.handleTouchMove,
+      false
+    );
   },
 
   beforeRouteLeave(to, from, next) {
@@ -92,7 +128,7 @@ export default {
       }
     },
 
-    onUnload(e) {
+    handleUnload(e) {
       e.preventDefault();
       this.display = true;
       this.display = true;
@@ -100,15 +136,26 @@ export default {
       e.returnValue = '';
     },
 
-    isTouch() {
-      return (
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        navigator.msMaxTouchPoints > 0
-      );
+    handleTouchStart(e) {
+      this.yDown = e.touches[0].clientY;
+      this.yDiff = 0;
     },
 
-    onScrollUp() {},
+    handleTouchMove(e) {
+      if (!this.yDown) return;
+
+      this.yDiff = this.yDown - e.touches[0].clientY;
+    },
+
+    handleTouchEnd() {
+      // If the touch was toward the top and the difference
+      // was greater than the threshold then the user tried to exit.
+      if (this.yDiff < 0 && Math.abs(this.yDiff) > this.swipeThreshold) {
+        this.triedToExit = true;
+        this.display = true;
+      }
+      this.yDown = null;
+    },
   },
 };
 </script>

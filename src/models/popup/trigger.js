@@ -29,6 +29,7 @@ const MINUTES_PER_HOUR = 60;
 const HOURS_PER_DAY = 24;
 const DAYS_PER_WEEK = 7;
 
+const SEC = MS_PER_SECOND;
 const MINUTE = SECS_PER_MINUTE * MS_PER_SECOND;
 const HOUR = MINUTE * MINUTES_PER_HOUR;
 const DAY = HOUR * HOURS_PER_DAY;
@@ -51,6 +52,13 @@ export const DisplayTimeFrequencyValues = Object.freeze({
   TWO_DAYS: new TriggerOptionViewModel('Every 2 days', 2 * DAY),
   THREE_DAYS: new TriggerOptionViewModel('Every 3 days', 3 * DAY),
   WEEK: new TriggerOptionViewModel('Every week', WEEK),
+});
+
+export const ExitTriggerValues = Object.freeze({
+  FIVE_SECONDS: new TriggerOptionViewModel('5 Seconds', 5 * SEC),
+  TEN_SECONDS: new TriggerOptionViewModel('10 Seconds', 10 * SEC),
+  HALF_MINUTE: new TriggerOptionViewModel('30 Seconds', 0.5 * MINUTE),
+  MINUTE: new TriggerOptionViewModel('1 minute', MINUTE),
 });
 
 export default class Trigger {
@@ -114,13 +122,13 @@ export default class Trigger {
     );
   }
 
-  static newOnExitIntentTrigger(isEnabled) {
+  static newOnExitIntentTrigger(isEnabled, selected) {
     const label = 'Show on exit-intent';
     return new Trigger(
       isEnabled,
       label,
-      new TriggerOptionViewModel('', true),
-      [],
+      selected,
+      Object.values(ExitTriggerValues),
       true
     );
   }
@@ -144,7 +152,7 @@ export default class Trigger {
   }
 
   static getDefaultExitTrigger() {
-    return Trigger.newOnExitIntentTrigger(false);
+    return Trigger.newOnExitIntentTrigger(false, ExitTriggerValues.TEN_SECONDS);
   }
 
   static getDefaultTimeFrequencyTrigger() {
