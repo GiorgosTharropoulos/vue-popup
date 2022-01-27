@@ -216,7 +216,7 @@ export default {
   },
 
   firestore: {
-    popups: PopupService.collection(),
+    popups: PopupService.collection,
   },
 };
 </script>

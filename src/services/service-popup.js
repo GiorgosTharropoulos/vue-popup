@@ -3,46 +3,67 @@ import Pbutton from '../models/popup/button';
 import Popup from '../models/popup/popup';
 import Trigger from '../models/popup/trigger';
 
-const collection = db.collection('popups');
-
 export default class PopupService {
+  static #fromPojo(doc) {
+    const documentData = doc.data();
+
+    const button = new Pbutton(documentData.button);
+
+    const data = {
+      backgroundImage: documentData.backgroundImage,
+      button: button,
+      clicks: documentData.clicks,
+      content: documentData.content,
+      createdAt: documentData.createdAt,
+      delayTrigger: Trigger.fromData(documentData.delayTrigger),
+      exitTrigger: Trigger.fromData(documentData.exitTrigger),
+      scrollTrigger: Trigger.fromData(documentData.scrollTrigger),
+      timeTrigger: Trigger.fromData(documentData.timeTrigger),
+      lastViewedAt: documentData.lastViewedAt,
+      title: documentData.title,
+      views: documentData.views,
+    };
+
+    return new Popup(data);
+  }
   static async get(id) {
-    const doc = await collection.doc(id).get();
+    const doc = await this.collection.doc(id).get();
 
     if (!doc.exists) throw new Error(`Popup with id ${id} does not exists.`);
 
-    const pojo = doc.data();
-
-    const button = new Pbutton(pojo.button);
-
-    const data = {
-      backgroundImage: pojo.backgroundImage,
-      button: button,
-      clicks: pojo.clicks,
-      content: pojo.content,
-      createdAt: pojo.createdAt,
-      delayTrigger: Trigger.fromData(pojo.delayTrigger),
-      exitTrigger: Trigger.fromData(pojo.exitTrigger),
-      scrollTrigger: Trigger.fromData(pojo.scrollTrigger),
-      timeTrigger: Trigger.fromData(pojo.timeTrigger),
-      lastViewedAt: pojo.lastViewedAt,
-      title: pojo.title,
-      views: pojo.views,
-    };
-    return new Popup(data);
+    return this.#fromPojo(doc);
   }
 
-  static collection() {
-    return collection;
-  }
+  static collection = db.collection('popups');
+
   static async create(popup) {
-    return await collection.add(popup.toJSON());
+    return await this.collection.add(popup.toJSON());
   }
   static async delete(id) {
-    await collection.doc(id).delete();
+    await this.collection.doc(id).delete();
   }
 
   static async update(id, popup) {
-    return await collection.doc(id).set(popup.toJSON());
+    return await this.collection.doc(id).set(popup.toJSON());
+  }
+
+  static async getAllDisplayed() {
+    return (
+      await this.collection.where('lastViewedAt', '!=', null).get()
+    ).docs.map(this.#fromPojo);
+  }
+
+  static async shouldBeDisplayed() {
+    const neverShowed = (
+      await this.collection.where('lastViewedAt', '==', null).get()
+    ).docs.map(this.#fromPojo);
+
+    const displayed = await this.getAllDisplayed();
+
+    const shouldDisplayAgain = displayed.filter(pop =>
+      pop.shouldGetDisplayed()
+    );
+
+    return [...neverShowed, ...shouldDisplayAgain];
   }
 }

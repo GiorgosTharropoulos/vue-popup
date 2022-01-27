@@ -102,7 +102,7 @@ import Popup from '../../../models/popup/popup';
 // Components
 
 import CardTitle from '../../shared/CardTitle.vue';
-import Editor from '../../shared/Editor.vue';
+import Editor from '@/components/editor/Editor.vue';
 
 export default {
   components: {

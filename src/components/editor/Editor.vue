@@ -262,9 +262,9 @@ import { FontFamily } from '@tiptap/extension-font-family';
 import sanitizeHtml from 'sanitize-html';
 
 // Components
-import ActionButton from '../editor/ActionButton.vue';
-import FontFamilySelect from '../editor/FontFamilySelect.vue';
-import FontSizeSelect from '../editor/FontSizeSelect.vue';
+import ActionButton from './ActionButton.vue';
+import FontFamilySelect from './FontFamilySelect.vue';
+import FontSizeSelect from './FontSizeSelect.vue';
 
 // Utils
 import {

@@ -89,6 +89,24 @@ export default class Popup {
   setViewedNow() {
     this.lastViewedAt = Date.now();
   }
+
+  shouldGetDisplayed() {
+    // If the popup has not been shown ever.
+    if (!this.lastViewedAt) return true;
+
+    // The unix timestamp that the popup was viewed plus the value of the
+    // trigger should be less than the current timestamp for the
+    // popup to be shown.
+    return this.lastViewedAt + this.timeTrigger.selected.value <= Date.now();
+  }
+
+  areAllTriggersDisabled() {
+    return (
+      !this.delayTrigger.isEnabled &&
+      !this.scrollTrigger.isEnabled &&
+      !this.exitTrigger.isEnabled
+    );
+  }
 }
 
 export const gridHeaders = [
