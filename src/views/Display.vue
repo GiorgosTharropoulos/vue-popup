@@ -1,21 +1,32 @@
 <template>
   <section style="position: relative">
     <div
-      style="position: fixed; bottom: 0; right: 0; font-size: 50px"
+      class="mb-2 mr-3"
+      style="position: fixed; bottom: 0; right: 0"
       v-if="display"
     >
-      {{ popup.title }}
+      <popup-display :popup="popup" @dismiss="handleDismiss" />
     </div>
     <div style="height: 2000px"></div>
   </section>
 </template>
 
 <script>
+import { store } from '../stores/hoverStore';
+
 import PopupService from '@/services/service-popup.js';
 
+import PopupDisplay from '@/components/popups/PopupDisplay';
+import { LinkedList } from '../utils/utils';
+
 export default {
+  components: {
+    PopupDisplay,
+  },
+
   data() {
     return {
+      popupsLinkedList: new LinkedList(),
       popup: null,
       display: false,
       timeoutId: null,
@@ -25,64 +36,38 @@ export default {
       swipeThreshold: 200,
       yDiff: null,
       yDown: null,
+      exitTriggerMounted: false,
     };
   },
 
   watch: {
     display(value) {
-      value && this.popup?.setViewedNow();
+      value && PopupService.setViewedNow(this.popup);
     },
+
+    isHoveringOutside(value) {
+      if (value && this.exitTriggerMounted) {
+        this.display = true;
+      }
+    },
+  },
+
+  computed: {
+    isHoveringOutside: () => store.hoveringOutsideMain,
   },
 
   created() {
     PopupService.shouldBeDisplayed()
       .then(popups => {
-        if (Array.isArray(popups) && popups.length > 0) {
-          this.popup = popups[0];
+        this.popupsLinkedList = popups;
 
-          if (this.popup.areAllTriggersDisabled()) {
-            this.display = true;
-          } else {
-            if (this.popup.exitTrigger.isEnabled) {
-              setTimeout(() => {
-                window.addEventListener('beforeunload', this.handleUnload);
-                window.document.body.addEventListener(
-                  'touchstart',
-                  this.handleTouchStart,
-                  false
-                );
-                window.document.body.addEventListener(
-                  'touchend',
-                  this.handleTouchEnd,
-                  false
-                );
-                window.document.body.addEventListener(
-                  'touchmove',
-                  this.handleTouchMove,
-                  false
-                );
-              }, this.popup.exitTrigger.selected.value);
-            }
-            // Delay Trigger
-            if (this.popup.delayTrigger.isEnabled) {
-              this.timeoutId = setTimeout(
-                () => (this.display = true),
-                this.popup.delayTrigger.selected.value
-              );
-            }
-
-            // Scroll Trigger
-            if (this.popup.scrollTrigger.isEnabled) {
-              window.addEventListener('scroll', this.onScrollTrigger);
-            }
-          }
-        }
+        this.setPopupAndTriggers();
       })
       .catch(error => console.error(error));
   },
 
   destroyed() {
-    window.removeEventListener('scroll', this.onScrollTrigger);
+    window.removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('beforeunload', this.handleUnload);
     window.document.body.removeEventListener(
       'touchstart',
@@ -102,7 +87,7 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
-    if (!this.triedToExit) {
+    if (!this.triedToExit && this.exitTriggerMounted) {
       this.triedToExit = true;
       this.display = true;
       next(false);
@@ -112,7 +97,7 @@ export default {
   },
 
   methods: {
-    onScrollTrigger() {
+    handleScroll() {
       // pageYOffset the pixels that the user has scrolled.
       // offsetHeight the heigh of element in pixes including borders and padding.
 
@@ -155,6 +140,54 @@ export default {
         this.display = true;
       }
       this.yDown = null;
+    },
+
+    handleDismiss() {
+      this.clearState();
+
+      this.setPopupAndTriggers();
+    },
+
+    setPopupAndTriggers() {
+      const popup = this.popupsLinkedList.popFirst();
+
+      if (!popup) return;
+
+      this.popup = popup;
+
+      if (this.popup.areAllTriggersDisabled()) {
+        this.display = true;
+      } else {
+        // Exit trigger
+        this.popup.setExitTrigger(
+          window,
+          {
+            unloadHandler: this.handleUnload,
+            touchStartHandler: this.handleTouchStart,
+            touchEndHandler: this.handleTouchEnd,
+            touchMoveHandler: this.handleTouchMove,
+          },
+          () => (this.exitTriggerMounted = true)
+        );
+
+        // Delay Trigger
+        this.timeoutId = this.popup.setDelayTrigger(
+          () => (this.display = true)
+        );
+
+        // Scroll Trigger
+        if (this.popup.scrollTrigger.isEnabled) {
+          window.addEventListener('scroll', this.handleScroll);
+        }
+      }
+    },
+
+    clearState() {
+      this.triedToExit = false;
+      this.exitTriggerMounted = false;
+      this.display = false;
+      this.timeoutId = null;
+      this.popup = null;
     },
   },
 };

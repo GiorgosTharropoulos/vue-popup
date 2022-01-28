@@ -5,6 +5,7 @@ import Pbutton from './button';
 import { Header } from '../base';
 
 export default class Popup {
+  id = '';
   title = 'My popup';
   content = '<h1>20% Off</h1>';
 
@@ -20,6 +21,7 @@ export default class Popup {
   createdAt = Date.now();
 
   /**
+   * @param {String} id
    * @param {String} title
    * @param {String} content
    * @param {String} backgroundImage
@@ -38,6 +40,7 @@ export default class Popup {
   }
 
   load(data = {}) {
+    this.id = data.id || '';
     this.title = data.title || 'My popup';
     this.content = data.content || '<h1>20% Off</h1>';
     this.backgroundImage = data.backgroundImage || '';
@@ -106,6 +109,40 @@ export default class Popup {
       !this.scrollTrigger.isEnabled &&
       !this.exitTrigger.isEnabled
     );
+  }
+
+  setExitTrigger(
+    window,
+    { unloadHandler, touchStartHandler, touchEndHandler, touchMoveHandler },
+    cb
+  ) {
+    if (this.exitTrigger.isEnabled) {
+      setTimeout(() => {
+        window.addEventListener('beforeunload', unloadHandler);
+        window.document.body.addEventListener(
+          'touchstart',
+          touchStartHandler,
+          false
+        );
+        window.document.body.addEventListener(
+          'touchend',
+          touchEndHandler,
+          false
+        );
+        window.document.body.addEventListener(
+          'touchmove',
+          touchMoveHandler,
+          false
+        );
+        cb();
+      }, this.exitTrigger.selected.value);
+    }
+  }
+
+  setDelayTrigger(cb) {
+    if (this.delayTrigger.isEnabled) {
+      return setTimeout(cb, this.delayTrigger.selected.value);
+    }
   }
 }
 

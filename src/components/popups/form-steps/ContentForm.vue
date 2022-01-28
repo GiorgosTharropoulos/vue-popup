@@ -1,6 +1,6 @@
 <template>
   <v-stepper-content step="2">
-    <v-sheet class="mb-2">
+    <v-sheet>
       <!-- Begin Content -->
       <v-row>
         <v-col cols="12" md="6">
@@ -48,20 +48,11 @@
         <!-- End Actions -->
 
         <!-- Begin Preview -->
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="d-flex flex-column">
           <card-title>Preview</card-title>
-          <v-card>
-            <v-img
-              :key="key"
-              :src="value.backgroundImage"
-              height="300px"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2)"
-            >
-              <v-card-text>
-                <div v-html="value.content"></div>
-              </v-card-text>
-            </v-img>
-          </v-card>
+          <div class="d-flex align-center justify-center flex-grow-1">
+            <popup-display :popup="value" />
+          </div>
         </v-col>
         <!-- End Preview -->
       </v-row>
@@ -103,11 +94,13 @@ import Popup from '../../../models/popup/popup';
 
 import CardTitle from '../../shared/CardTitle.vue';
 import Editor from '@/components/editor/Editor.vue';
+import PopupDisplay from '@/components/popups/PopupDisplay.vue';
 
 export default {
   components: {
     CardTitle,
     Editor,
+    PopupDisplay,
   },
 
   props: {

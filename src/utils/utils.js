@@ -39,3 +39,35 @@ export const insertIntoSortedArray = (array, value) => {
   const index = getIndexOfSortedArray(array, value);
   return [...array.slice(0, index), value, ...array.slice(index)];
 };
+
+export class ListNode {
+  constructor(data, next = null) {
+    this.data = data;
+    this.next = next;
+  }
+}
+
+export class LinkedList {
+  constructor(head = null) {
+    this.head = head;
+  }
+
+  popFirst() {
+    if (!this.head) return null;
+
+    const head = this.head;
+
+    this.head = this.head.next;
+
+    return head.data;
+  }
+
+  static fromArray(arr) {
+    const head = arr.reduceRight(
+      (next, value) => new ListNode(value, next),
+      null
+    );
+
+    return new LinkedList(head);
+  }
+}

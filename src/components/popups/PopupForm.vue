@@ -1,6 +1,7 @@
 <template>
   <v-dialog
     :value="isVisible"
+    :fullscreen="$vuetify.breakpoint.mobile"
     @input="newVisibility => $emit('visibilityChanged', newVisibility)"
     @click:outsite="$emit('visibilityChanged', false)"
     hide-overlay
@@ -17,7 +18,7 @@
 
       <v-stepper color="primary" v-model="currentStep">
         <!-- Begin Stepper Header -->
-        <v-stepper-header>
+        <v-stepper-header ref="header">
           <v-stepper-step :complete="currentStep > 1" step="1">
             Set Pop-Up's triggers
           </v-stepper-step>
@@ -41,21 +42,21 @@
           <trigger-form
             :value="value"
             @input="handlePopupInput"
-            @increment="currentStep++"
+            @increment="handleIncrement"
           />
 
           <content-form
             ref="contentForm"
             :value="value"
             @input="handlePopupInput"
-            @decrement="currentStep--"
-            @increment="currentStep++"
+            @decrement="handleDecrement"
+            @increment="handleIncrement"
           />
 
           <button-form
             :value="value"
             @input="handlePopupInput"
-            @decrement="currentStep--"
+            @decrement="handleDecrement"
             @submit="handleSubmit"
           />
           <!-- @submit="handleSubmit" -->
@@ -102,6 +103,16 @@ export default {
     };
   },
 
+  computed: {
+    options() {
+      return {
+        duration: 300,
+        offset: 0,
+        easing: 'easeInOutCubic',
+      };
+    },
+  },
+
   methods: {
     handlePopupInput(popup) {
       this.$emit('input', this.value.copy(popup));
@@ -111,6 +122,16 @@ export default {
       this.$refs.contentForm.clearBackgroundImage();
       this.currentStep = 1;
       this.$emit('submit');
+    },
+
+    handleDecrement() {
+      this.$vuetify.goTo(this.$refs.header, {});
+      this.currentStep--;
+    },
+
+    handleIncrement() {
+      this.$vuetify.goTo(this.$refs.header, {});
+      this.currentStep++;
     },
   },
 };

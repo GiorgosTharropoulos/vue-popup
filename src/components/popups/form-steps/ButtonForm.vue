@@ -1,5 +1,5 @@
 <template>
-  <v-stepper-content step="3" class="pa-2">
+  <v-stepper-content step="3" class="pa-1 pt-0">
     <!-- Begin Content -->
     <v-container fluid align="center" class="pa-0">
       <v-row no-gutters>
@@ -41,19 +41,11 @@
         <!-- End Actions -->
 
         <!-- Begin Preview -->
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="d-flex flex-column">
           <card-title>Preview</card-title>
-          <v-card>
-            <v-img
-              :src="value.backgroundImage"
-              height="300px"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2)"
-            >
-              <v-card-text>
-                <div v-html="value.content"></div>
-              </v-card-text>
-            </v-img>
-          </v-card>
+          <div class="d-flex align-center justify-center flex-grow-1">
+            <popup-display :popup="value" />
+          </div>
         </v-col>
         <!-- End Preview -->
       </v-row>
@@ -93,6 +85,7 @@ import ButtonSizeSlider from '../component-modification/ButtonSizeSlider.vue';
 import ButtonColorSelect from '../component-modification/ButtonColorSelect.vue';
 import ButtonGeneralProps from '../component-modification/ButtonGeneralProps.vue';
 import CardTitle from '../../shared/CardTitle.vue';
+import PopupDisplay from '@/components/popups/PopupDisplay.vue';
 
 import Popup from '../../../models/popup/popup';
 
@@ -103,6 +96,7 @@ export default {
     ButtonColorSelect,
     ButtonGeneralProps,
     CardTitle,
+    PopupDisplay,
   },
 
   props: {

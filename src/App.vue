@@ -1,8 +1,17 @@
 <template>
   <v-app id="inspire">
-    <side-bar ref="sidebar"></side-bar>
+    <side-bar
+      ref="sidebar"
+      @mouseover.native="handleMouseOver"
+      @mouseout.native="handleMouseOut"
+    ></side-bar>
 
-    <v-app-bar app>
+    <v-app-bar
+      app
+      ref="appBar"
+      @mouseover.native="handleMouseOver"
+      @mouseout.native="handleMouseOut"
+    >
       <v-app-bar-nav-icon
         @click="$refs.sidebar.drawer = !$refs.sidebar.drawer"
       ></v-app-bar-nav-icon>
@@ -10,7 +19,7 @@
       <v-toolbar-title>Flashy Popups 🦄</v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main ref="main">
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -20,8 +29,20 @@
 
 <script>
 import SideBar from './components/navigation/SideBar.vue';
+import { mutations } from './stores/hoverStore';
+
 export default {
   components: { SideBar },
+
+  methods: {
+    handleMouseOver() {
+      mutations.setHovering(true);
+    },
+
+    handleMouseOut() {
+      mutations.setHovering(false);
+    },
+  },
 };
 </script>
 

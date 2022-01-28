@@ -2,6 +2,7 @@ import { db } from '../db';
 import Pbutton from '../models/popup/button';
 import Popup from '../models/popup/popup';
 import Trigger from '../models/popup/trigger';
+import { LinkedList } from '../utils/utils';
 
 export default class PopupService {
   static #fromPojo(doc) {
@@ -10,6 +11,7 @@ export default class PopupService {
     const button = new Pbutton(documentData.button);
 
     const data = {
+      id: doc.id,
       backgroundImage: documentData.backgroundImage,
       button: button,
       clicks: documentData.clicks,
@@ -48,9 +50,11 @@ export default class PopupService {
   }
 
   static async getAllDisplayed() {
-    return (
+    const popups = (
       await this.collection.where('lastViewedAt', '!=', null).get()
     ).docs.map(this.#fromPojo);
+
+    return popups;
   }
 
   static async shouldBeDisplayed() {
@@ -64,6 +68,12 @@ export default class PopupService {
       pop.shouldGetDisplayed()
     );
 
-    return [...neverShowed, ...shouldDisplayAgain];
+    return LinkedList.fromArray([...neverShowed, ...shouldDisplayAgain]);
+  }
+
+  static async setViewedNow(popup) {
+    return await this.collection
+      .doc(popup.id)
+      .update({ lastViewedAt: Date.now(), views: popup.views + 1 });
   }
 }
