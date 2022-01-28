@@ -3,12 +3,12 @@
     <v-card-text>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" sm="6">
+          <v-col>
             <v-checkbox v-model="value.isOutlined" label="Outlined" />
             <v-checkbox v-model="value.isPlain" label="Plain" />
             <v-checkbox v-model="value.isText" label="Text" />
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col>
             <v-checkbox v-model="value.isRounded" label="Rounded" />
             <v-checkbox v-model="value.isTile" label="Tile" />
             <v-checkbox v-model="value.isBlock" label="Block" />

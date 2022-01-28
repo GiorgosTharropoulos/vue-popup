@@ -7,7 +7,56 @@
     >
       <popup-display :popup="popup" @dismiss="handleDismiss" />
     </div>
-    <div style="height: 2000px"></div>
+    <div>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+    </div>
   </section>
 </template>
 
@@ -46,7 +95,7 @@ export default {
     },
 
     isHoveringOutside(value) {
-      if (value && this.exitTriggerMounted) {
+      if (value && this.exitTriggerMounted && !this.triedToExit) {
         this.display = true;
       }
     },
@@ -57,13 +106,11 @@ export default {
   },
 
   created() {
-    PopupService.shouldBeDisplayed()
-      .then(popups => {
-        this.popupsLinkedList = popups;
+    PopupService.shouldBeDisplayed().then(popups => {
+      this.popupsLinkedList = popups;
 
-        this.setPopupAndTriggers();
-      })
-      .catch(error => console.error(error));
+      this.setPopupAndTriggers();
+    });
   },
 
   destroyed() {
@@ -114,6 +161,7 @@ export default {
     },
 
     handleUnload(e) {
+      if (this.triedToExit) return;
       e.preventDefault();
       this.display = true;
       this.display = true;

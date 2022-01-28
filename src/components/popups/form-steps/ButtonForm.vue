@@ -49,33 +49,33 @@
         </v-col>
         <!-- End Preview -->
       </v-row>
-    </v-container>
 
-    <!-- End Content-->
-    <v-row align="center">
-      <v-col>
-        <v-btn
-          class="float-left"
-          rounded
-          color="secondary"
-          @click="$emit('decrement')"
-        >
-          <v-icon left> mdi-arrow-left </v-icon>
-          Back
-        </v-btn>
-      </v-col>
-      <v-col>
-        <v-btn
-          class="float-right"
-          rounded
-          color="primary"
-          @click="$emit('submit')"
-        >
-          <v-icon left> mdi-pencil </v-icon>
-          Save
-        </v-btn>
-      </v-col>
-    </v-row>
+      <!-- End Content-->
+      <v-row align="center">
+        <v-col>
+          <v-btn
+            class="float-left"
+            rounded
+            color="secondary"
+            @click="$emit('decrement')"
+          >
+            <v-icon left> mdi-arrow-left </v-icon>
+            Back
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn
+            class="float-right"
+            rounded
+            color="primary"
+            @click="$emit('submit')"
+          >
+            <v-icon left> mdi-pencil </v-icon>
+            Save
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-stepper-content>
 </template>
 

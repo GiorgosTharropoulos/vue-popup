@@ -76,4 +76,8 @@ export default class PopupService {
       .doc(popup.id)
       .update({ lastViewedAt: Date.now(), views: popup.views + 1 });
   }
+
+  static async resetViewedNow(id) {
+    return await this.collection.doc(id).update({ lastViewedAt: null });
+  }
 }

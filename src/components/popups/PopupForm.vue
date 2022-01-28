@@ -16,9 +16,9 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-stepper color="primary" v-model="currentStep">
+      <v-stepper color="primary" v-model="currentStep" elevation="0">
         <!-- Begin Stepper Header -->
-        <v-stepper-header ref="header">
+        <v-stepper-header ref="header" v-show="!$vuetify.breakpoint.mobile">
           <v-stepper-step :complete="currentStep > 1" step="1">
             Set Pop-Up's triggers
           </v-stepper-step>

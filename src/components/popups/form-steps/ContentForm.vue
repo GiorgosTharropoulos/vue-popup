@@ -1,17 +1,16 @@
 <template>
   <v-stepper-content step="2">
-    <v-sheet>
-      <!-- Begin Content -->
+    <v-container fluid class="pa-0">
+      <v-row no-gutters>
+        <v-col>
+          <card-title>Content</card-title>
+        </v-col>
+      </v-row>
       <v-row>
+        <!-- Begin Content -->
         <v-col cols="12" md="6">
           <!-- Begin Actions -->
-          <v-container fluid>
-            <v-row>
-              <v-col>
-                <card-title>Content</card-title>
-              </v-col>
-            </v-row>
-
+          <v-container fluid class="pa-0">
             <!-- Begin Background Image & Title -->
             <v-row>
               <v-col cols="12" md="6">
@@ -58,7 +57,7 @@
       </v-row>
 
       <!-- End Content-->
-    </v-sheet>
+    </v-container>
     <v-row align="center">
       <v-col>
         <v-btn

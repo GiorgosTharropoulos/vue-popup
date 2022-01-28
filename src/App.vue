@@ -34,6 +34,14 @@ import { mutations } from './stores/hoverStore';
 export default {
   components: { SideBar },
 
+  mounted() {
+    this.$refs.appBar.$el.addEventListener(
+      'touchstart',
+      this.handleMouseOver,
+      false
+    );
+  },
+
   methods: {
     handleMouseOver() {
       mutations.setHovering(true);
@@ -42,6 +50,13 @@ export default {
     handleMouseOut() {
       mutations.setHovering(false);
     },
+  },
+
+  destroyed() {
+    this.$refs.appBar.$el.removeEventListener(
+      'touchstart',
+      this.handleMouseOver
+    );
   },
 };
 </script>

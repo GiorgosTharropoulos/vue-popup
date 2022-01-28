@@ -51,9 +51,23 @@
             <v-icon small class="mr-2" @click="handleEditClicked(item)">
               mdi-pencil</v-icon
             >
-            <v-icon small @click="handleRemoveClicked(item)">
+            <v-icon class="mr-2" small @click="handleRemoveClicked(item)">
               mdi-delete
             </v-icon>
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  small
+                  @click="handleResetViewedAt(item)"
+                >
+                  mdi-reload
+                </v-icon>
+              </template>
+              <span>Reset Last Viewed</span>
+            </v-tooltip>
           </template>
           <template #item.lastViewedAt="{ item }">
             {{
@@ -212,6 +226,10 @@ export default {
     removePopupConfirm() {
       PopupService.delete(this.selectedId);
       this.dialogDelete = false;
+    },
+
+    async handleResetViewedAt(popup) {
+      await PopupService.resetViewedNow(popup.id);
     },
   },
 
