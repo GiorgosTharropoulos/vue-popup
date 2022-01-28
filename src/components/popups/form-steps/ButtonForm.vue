@@ -23,10 +23,18 @@
                   :value="value.button"
                   @input="handleButtonChanged"
                 />
-                <button-color-select
-                  :value="value.button"
-                  @input="handleButtonChanged"
-                />
+                <v-row align="center">
+                  <v-col>
+                    <button-color-select
+                      :value="value.button"
+                      @input="handleButtonChanged"
+                    />
+                  </v-col>
+                  <v-col>
+                    <v-text-field v-model="value.button.to" label="Target" />
+                  </v-col>
+                </v-row>
+
                 <button-general-props
                   :value="value.button"
                   @input="handleButtonChanged"

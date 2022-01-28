@@ -338,8 +338,7 @@ export default {
           PopupService.setViewedNow(pop);
 
           this.currentlyDisplayeQueue.push(pop);
-
-          this.hideExtra();
+          this.$nextTick(() => this.hideExtra());
         });
     },
 
@@ -361,7 +360,7 @@ export default {
 
             this.currentlyDisplayeQueue.push(pop);
 
-            this.hideExtra();
+            this.$nextTick(() => this.hideExtra());
           }
         });
     },
@@ -407,7 +406,7 @@ export default {
     },
 
     handleDismiss(pop) {
-      const toRemove = this.popups.findIndex(popup => popup.id === pop.id);
+      const toRemove = this.popups.find(popup => popup.id === pop.id);
 
       const index = this.popups.indexOf(toRemove);
 
@@ -435,7 +434,7 @@ export default {
 
       this.currentlyDisplayeQueue.push(popupToDisplay);
 
-      this.hideExtra();
+      this.$nextTick(() => this.hideExtra());
     },
 
     handleExitMounted(pop) {

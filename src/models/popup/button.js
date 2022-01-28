@@ -22,6 +22,7 @@ export default class Pbutton {
     this.isLarge = data.isLarge || false;
     this.isXLarge = data.isXLarge || false;
     this.color = data.color || 'primary';
+    this.to = data.to || '';
   }
 
   clear() {

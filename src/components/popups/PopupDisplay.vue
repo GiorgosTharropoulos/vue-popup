@@ -35,6 +35,8 @@
             :text="popup.button.isText"
             :tile="popup.button.isTile"
             :block="popup.button.isBlock"
+            :href="popup.button.to"
+            target="_blank"
           >
             {{ popup.button.text }}
           </v-btn>
