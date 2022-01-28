@@ -1,13 +1,195 @@
 <template>
   <section style="position: relative">
     <div
+      ref="container"
       class="mb-2 mr-3"
       style="position: fixed; bottom: 0; right: 0"
-      v-if="display"
+      v-if="popups.length > 0"
     >
-      <popup-display :popup="popup" @dismiss="handleDismiss" />
+      <popup-container
+        :popups="popups"
+        @dismiss="handleDismiss"
+        @delay="handleDelay"
+        @exitMounted="handleExitMounted"
+      />
     </div>
     <div>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ad,
+        commodi totam quis quod labore fugiat non quos sit ipsam molestiae
+        perspiciatis provident similique saepe magnam animi omnis vero quas
+        sapiente dicta reprehenderit voluptatem. Illo dolore ipsam, perferendis,
+        eum modi rerum, animi aspernatur temporibus harum voluptates magni
+        reprehenderit! Autem, earum nulla exercitationem iusto ea odio sequi
+        dolorum eveniet delectus eos ducimus quidem ut, architecto laborum vero
+        asperiores quod sed qui non velit dignissimos, tenetur quia. Aperiam
+        voluptatibus praesentium iure cumque dolores nulla culpa, in odit
+        expedita perferendis odio quas libero minima ratione vel cupiditate
+        quam, id, hic doloribus sunt! Esse.
+      </p>
       <h1>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, quae.
       </h1>
@@ -65,51 +247,64 @@ import { store } from '../stores/hoverStore';
 
 import PopupService from '@/services/service-popup.js';
 
-import PopupDisplay from '@/components/popups/PopupDisplay';
-import { LinkedList } from '../utils/utils';
+import PopupContainer from '@/components/display/PopupContainer.vue';
 
 export default {
   components: {
-    PopupDisplay,
+    PopupContainer,
   },
 
   data() {
     return {
-      popupsLinkedList: new LinkedList(),
-      popup: null,
-      display: false,
+      popups: [],
       timeoutId: null,
-      scrollPercent: 0,
       triedToExit: false,
       oldPageY: null,
       swipeThreshold: 200,
       yDiff: null,
       yDown: null,
-      exitTriggerMounted: false,
+      currentlyDisplayeQueue: [],
     };
   },
 
   watch: {
-    display(value) {
-      value && PopupService.setViewedNow(this.popup);
-    },
-
     isHoveringOutside(value) {
-      if (value && this.exitTriggerMounted && !this.triedToExit) {
-        this.display = true;
+      if (value && !this.triedToExit) {
+        this.notifyExit();
       }
     },
   },
 
   computed: {
     isHoveringOutside: () => store.hoveringOutsideMain,
+    viewportHeight: function () {
+      const main = document.getElementById('mainWrapper');
+      const style = window.getComputedStyle(main);
+
+      return window.innerHeight - parseFloat(style.paddingTop);
+    },
   },
 
   created() {
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('beforeunload', this.handleUnload);
+    window.document.body.addEventListener(
+      'touchstart',
+      this.handleTouchStart,
+      false
+    );
+    window.document.body.addEventListener(
+      'touchend',
+      this.handleTouchEnd,
+      false
+    );
+    window.document.body.addEventListener(
+      'touchmove',
+      this.handleTouchMove,
+      false
+    );
     PopupService.shouldBeDisplayed().then(popups => {
-      this.popupsLinkedList = popups;
-
-      this.setPopupAndTriggers();
+      this.popups = popups;
     });
   },
 
@@ -118,25 +313,15 @@ export default {
     window.removeEventListener('beforeunload', this.handleUnload);
     window.document.body.removeEventListener(
       'touchstart',
-      this.handleTouchStart,
-      false
+      this.handleTouchStart
     );
-    window.document.body.removeEventListener(
-      'touchend',
-      this.handleTouchEnd,
-      false
-    );
-    window.document.body.removeEventListener(
-      'touchmove',
-      this.handleTouchMove,
-      false
-    );
+    window.document.body.removeEventListener('touchend', this.handleTouchEnd);
+    window.document.body.removeEventListener('touchmove', this.handleTouchMove);
   },
 
   beforeRouteLeave(to, from, next) {
-    if (!this.triedToExit && this.exitTriggerMounted) {
-      this.triedToExit = true;
-      this.display = true;
+    if (this.popups.filter(pop => pop.exitTriggerMounted).length > 0) {
+      this.notifyExit();
       next(false);
     } else {
       next();
@@ -144,6 +329,43 @@ export default {
   },
 
   methods: {
+    notifyExit() {
+      this.popups
+        .filter(pop => pop.exitTriggerMounted)
+        .forEach(pop => {
+          pop.display = true;
+          // We do not need to await the set viewed now
+          PopupService.setViewedNow(pop);
+
+          this.currentlyDisplayeQueue.push(pop);
+
+          this.hideExtra();
+        });
+    },
+
+    notifyScroll(scrollPercent) {
+      this.popups
+        .filter(
+          pop =>
+            pop.scrollTrigger.isEnabled &&
+            pop.scrollTrigger.selected.value >= scrollPercent
+        )
+        .forEach(pop => {
+          if (
+            Math.round(scrollPercent * 100) >=
+            Math.round(pop.scrollTrigger.selected.value * 100)
+          ) {
+            pop.display = true;
+            // We do not need to await the set viewed now
+            PopupService.setViewedNow(pop);
+
+            this.currentlyDisplayeQueue.push(pop);
+
+            this.hideExtra();
+          }
+        });
+    },
+
     handleScroll() {
       // pageYOffset the pixels that the user has scrolled.
       // offsetHeight the heigh of element in pixes including borders and padding.
@@ -152,21 +374,16 @@ export default {
       const docHeight = document.body.offsetHeight;
       const winHeight = window.innerHeight;
       const scrollPercent = scrollTop / (docHeight - winHeight);
-
-      if (scrollPercent >= this.popup.scrollTrigger.selected.value) {
-        this.display = true;
-        // Stop the timeout if the scroll event fired before the delay.
-        clearTimeout(this.timeoutId);
-      }
+      this.notifyScroll(scrollPercent);
     },
 
     handleUnload(e) {
-      if (this.triedToExit) return;
-      e.preventDefault();
-      this.display = true;
-      this.display = true;
-      this.triedToExit = true;
-      e.returnValue = '';
+      if (this.popups.filter(pop => pop.exitTriggerMounted).length > 0) {
+        this.notifyExit();
+        e.preventDefault();
+        this.triedToExit = true;
+        e.returnValue = '';
+      }
     },
 
     handleTouchStart(e) {
@@ -184,58 +401,62 @@ export default {
       // If the touch was toward the top and the difference
       // was greater than the threshold then the user tried to exit.
       if (this.yDiff < 0 && Math.abs(this.yDiff) > this.swipeThreshold) {
-        this.triedToExit = true;
-        this.display = true;
+        this.notifyExit();
       }
       this.yDown = null;
     },
 
-    handleDismiss() {
-      this.clearState();
+    handleDismiss(pop) {
+      const toRemove = this.popups.findIndex(popup => popup.id === pop.id);
 
-      this.setPopupAndTriggers();
+      const index = this.popups.indexOf(toRemove);
+
+      if (index === -1) return;
+
+      this.popups.splice(index, 1);
+
+      const dispIndex = this.currentlyDisplayeQueue.findIndex(
+        disp => disp.id === toRemove.id
+      );
+
+      if (dispIndex === -1) return;
+
+      this.currentlyDisplayeQueue.splice(index, 1);
     },
 
-    setPopupAndTriggers() {
-      const popup = this.popupsLinkedList.popFirst();
+    handleDelay(pop) {
+      const popupToDisplay = this.popups.find(popup => popup.id === pop.id);
 
-      if (!popup) return;
+      if (!popupToDisplay) return;
 
-      this.popup = popup;
+      popupToDisplay.display = true;
+      // We do not need to await the set viewed now
+      PopupService.setViewedNow(popupToDisplay);
 
-      if (this.popup.areAllTriggersDisabled()) {
-        this.display = true;
-      } else {
-        // Exit trigger
-        this.popup.setExitTrigger(
-          window,
-          {
-            unloadHandler: this.handleUnload,
-            touchStartHandler: this.handleTouchStart,
-            touchEndHandler: this.handleTouchEnd,
-            touchMoveHandler: this.handleTouchMove,
-          },
-          () => (this.exitTriggerMounted = true)
-        );
+      this.currentlyDisplayeQueue.push(popupToDisplay);
 
-        // Delay Trigger
-        this.timeoutId = this.popup.setDelayTrigger(
-          () => (this.display = true)
-        );
+      this.hideExtra();
+    },
 
-        // Scroll Trigger
-        if (this.popup.scrollTrigger.isEnabled) {
-          window.addEventListener('scroll', this.handleScroll);
-        }
+    handleExitMounted(pop) {
+      const popup = this.popups.find(p => p.id === pop.id);
+
+      popup.exitTriggerMounted = true;
+    },
+
+    hideExtra() {
+      if (
+        this.$refs.container.getBoundingClientRect().height >
+        this.viewportHeight
+      ) {
+        const toRemove = this.currentlyDisplayeQueue.shift();
+
+        const index = this.popups.findIndex(pop => pop.id === toRemove?.id);
+
+        if (index === -1) return;
+
+        this.popups.splice(index, 1);
       }
-    },
-
-    clearState() {
-      this.triedToExit = false;
-      this.exitTriggerMounted = false;
-      this.display = false;
-      this.timeoutId = null;
-      this.popup = null;
     },
   },
 };

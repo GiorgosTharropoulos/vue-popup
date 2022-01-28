@@ -2,7 +2,7 @@
   <v-fade-transition>
     <v-card elevation="5" max-width="300">
       <v-icon
-        @click="$emit('dismiss')"
+        @click="$emit('dismiss', popup)"
         style="
           position: absolute;
           top: 0;
@@ -50,6 +50,16 @@ import Popup from '../../models/popup/popup';
 export default {
   props: {
     popup: Popup,
+  },
+
+  mounted() {
+    this.popup.setDelayTrigger(() => this.$emit('delay', this.popup));
+
+    if (this.popup.exitTrigger.isEnabled) {
+      setTimeout(() => {
+        this.$emit('exitMounted', this.popup);
+      }, this.popup.exitTrigger.selected.value);
+    }
   },
 };
 </script>

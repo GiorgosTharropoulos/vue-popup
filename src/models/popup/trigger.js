@@ -36,6 +36,7 @@ const DAY = HOUR * HOURS_PER_DAY;
 const WEEK = DAY * DAYS_PER_WEEK;
 
 export const DelayTriggerValues = Object.freeze({
+  TEN_SEC: new TriggerOptionViewModel('After 10 seconds', 10 * SEC),
   HALF_MINUTE: new TriggerOptionViewModel('After 30 seconds', 0.5 * MINUTE),
   ONE_MINUTE: new TriggerOptionViewModel('After 1 minute', MINUTE),
   TWO_MINUTES: new TriggerOptionViewModel('After 2 minutes', 2 * MINUTE),

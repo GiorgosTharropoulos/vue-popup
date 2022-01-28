@@ -9,6 +9,7 @@
     <v-app-bar
       app
       ref="appBar"
+      id="appBar"
       @mouseover.native="handleMouseOver"
       @mouseout.native="handleMouseOut"
     >
@@ -19,7 +20,7 @@
       <v-toolbar-title>Flashy Popups 🦄</v-toolbar-title>
     </v-app-bar>
 
-    <v-main ref="main">
+    <v-main ref="main" id="mainWrapper">
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -53,10 +54,9 @@ export default {
   },
 
   destroyed() {
-    this.$refs.appBar.$el.removeEventListener(
-      'touchstart',
-      this.handleMouseOver
-    );
+    document
+      .getElementById('appBar')
+      .removeEventListener('touchstart', this.handleMouseOver);
   },
 };
 </script>
